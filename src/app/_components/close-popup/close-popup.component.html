@@ -1,0 +1,14 @@
+
+<dx-popup
+	(onInitialized)="popup = $event.component"
+	[height]="150"
+	[width]="300">
+	<div class="closeContainer">
+		<h4>{{formatMessage('exitTitle', [])}}</h4>
+		<p>{{formatMessage('exitMessage', [])}}</p>
+		<div class="buttonContainer">
+			<dx-button type="default" [width]="120" [text]="formatMessage('logout', [])" (click)="onLogoutClick()"></dx-button>
+			<dx-button type="danger" [width]="120" [text]="formatMessage('exit', [])" (click)="onExitClick()"></dx-button>
+		</div>
+	</div>
+</dx-popup>

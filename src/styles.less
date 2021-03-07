@@ -1,0 +1,65 @@
+/* You can add global styles to this file, and also import other style files */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Arial, Helvetica, sans-serif;
+  overflow: hidden;
+}
+
+.dx-header-row, .dx-group-row {
+	.dx-datagrid-text-content {
+		font-weight: bold;
+		font-size: 0.8em;
+		line-height: 1.6em;
+		padding-right: 5px;
+		.dx-badge {
+			font-size: 8px;
+			padding: 2px 5px;
+			display: inline-flex;
+			vertical-align: text-bottom;
+			margin-left: 3px;
+		}
+	}
+}
+
+.dx-datagrid {
+	.dx-state-hover {
+		cursor: pointer;
+	}
+	.dx-datagrid-header-panel {
+		.dx-toolbar {
+			margin-bottom: 0px;
+		}
+	}
+}
+.noDataNoHeight {
+	.dx-empty {
+		display: none;
+	}
+}
+.flexContainer {
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.userProfileContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  height: 80px;
+  div {
+    padding-left: 100px;
+  }
+  img {
+    position:absolute;
+    top: 0;
+    left: 0;
+    width: 80px;
+    height: 80px;
+    object-fit:cover;
+  }
+}

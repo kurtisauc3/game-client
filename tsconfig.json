@@ -1,0 +1,57 @@
+{
+	"compileOnSave": false,
+	"compilerOptions": {
+		"baseUrl": "",
+		"module": "es2020",
+		"outDir": "./dist/out-tsc",
+		"sourceMap": true,
+		"declaration": false,
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"allowSyntheticDefaultImports": true,
+		"downlevelIteration": true,
+		"emitDecoratorMetadata": true,
+		"experimentalDecorators": true,
+		"target": "es5",
+		"typeRoots": [
+			"node_modules/@types"
+		],
+		"lib": [
+			"es2017",
+			"es2016",
+			"es2015",
+			"dom"
+		],
+		"paths": {
+			"jszip": [
+				"./node_modules/jszip/dist/jszip.min.js"
+			],
+			"@environment": [
+				"./src/environments/index.ts"
+			],
+			"@assets": [
+				"./src/assets/index.ts"
+			],
+			"@services": [
+				"./src/app/_services/index.ts"
+			],
+			"@models": [
+				"./src/app/_models/index.ts"
+			],
+			"@components": [
+				"./src/app/_components/index.ts"
+			]
+		},
+	},
+	"files": [
+		"src/main.ts",
+		"src/polyfills.ts"
+	],
+	"include": [
+		"src/**/*.d.ts"
+	],
+	"exclude": [
+		"node_modules"
+	]
+}

@@ -1,0 +1,38 @@
+<dx-data-grid
+	(onInitialized)="dataGrid = $event.component"
+	(onToolbarPreparing)="onToolbarPreparing($event)"
+	(onContextMenuPreparing)="onContextMenuPreparing($event)"
+	(onRowClick)="onRowClick($event)"
+	[noDataText]="formatMessage('noFriends', [])"
+	[dataSource]="dataSource">
+	<dxi-column dataField="unreadMessages" [width]="30" cellTemplate="unreadMessagesTemplate"></dxi-column>
+	<dxi-column dataField="user.name" [caption]="formatMessage('playerName', [])"></dxi-column>
+	<dxi-column dataField="user.id" [caption]="formatMessage('playerName', [])" [visible]="false">
+		<dxo-form-item editorType="dxSelectBox" [editorOptions]="userIdEditorOptions">
+			<dxo-label [visible]="false"></dxo-label>
+		</dxo-form-item>
+	</dxi-column>
+	<dxi-column 
+		dataField="online"
+		[caption]="formatMessage('onlineStatus', [])"
+		[trueText]="formatMessage('online', [])"
+		[falseText]="formatMessage('offline', [])"
+		[groupIndex]="0">
+	</dxi-column>
+	<dxo-selection mode="none"></dxo-selection>
+	<dxo-editing>
+		<dxo-form [colCount]="1">
+			<dxi-item dataField="user.id"></dxi-item>
+		</dxo-form>
+		<dxo-texts 
+			[saveRowChanges]="formatMessage('addFriend', [])"
+			[confirmDeleteMessage]="formatMessage('confirmUnfriend', [])">
+		</dxo-texts>
+	</dxo-editing>
+	<dxo-summary>
+		<dxi-group-item column="online" summaryType="count" displayFormat="{0}"></dxi-group-item>
+	</dxo-summary>
+	<div *dxTemplate="let data of 'unreadMessagesTemplate'">
+		<app-unread-message-notification [profileId]="data.row.key"></app-unread-message-notification>
+	</div>
+</dx-data-grid>

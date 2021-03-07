@@ -1,0 +1,55 @@
+<!-- close popup confirmation -->
+<app-close-popup></app-close-popup>
+
+<ng-container *ngIf="profile$ | async as profile; else login">
+
+	<!-- chat popup -->
+	<app-message-popup></app-message-popup>
+
+
+	<div class="container">
+		<div class="appContainer">
+			<dx-tab-panel
+				(onInitialized)="leftTabPanel = $event.componet"
+				[items]="leftTabPanelItems">
+				<div *dxTemplate="let data of 'playTemplate'">
+					<app-play></app-play>
+				</div>
+				<div *dxTemplate="let data of 'profileTemplate'">
+					<app-profile></app-profile>
+				</div>
+				<div *dxTemplate="let data of 'matchHistoryTemplate'">
+					<app-match-history></app-match-history>
+				</div>
+				<div *dxTemplate="let data of 'teamsTemplate'">
+					<app-teams></app-teams>
+				</div>
+			</dx-tab-panel>
+		</div>
+		<div class="socialContainer">
+			<div class="userProfileContainer">
+				<div>{{ profile.playerName}}</div>
+				<img src="{{profile.pictureUrl || formatMessage('defaultPictureUrl', [])}}" />
+			</div>
+			<div class="friendListContainer">
+				<dx-tab-panel
+					(onInitialized)="rightTabPanel = $event.componet"
+					[items]="rightTabPanelItems">
+					<div *dxTemplate="let data of 'friendListTemplate'">
+						<app-friend-list></app-friend-list>
+					</div>
+					<div *dxTemplate="let data of 'eventListTemplate'">
+						<app-event-list></app-event-list>
+					</div>
+				</dx-tab-panel>
+			</div>
+		</div>
+	</div>
+</ng-container>
+<ng-template #login>
+
+	<!-- login form -->
+	<app-login></app-login>
+
+</ng-template>
+

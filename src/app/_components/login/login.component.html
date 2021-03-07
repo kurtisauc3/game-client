@@ -1,0 +1,24 @@
+<form (submit)="onFormSubmit($event)" class="flexContainer">
+	<dx-form
+		[width]="420"
+		[height]="'auto'"
+		(onInitialized)="form = $event.component">
+		<div *dxTemplate="let data of 'forgotPassword'">
+			<a (click)="updateForm(LoginType.forgotPassword)">{{formatMessage('forgotPasswordTitle', [])}}</a>
+		</div>
+		<div *dxTemplate="let data of 'create'"  class="form-footer">
+			{{formatMessage('createPrefix', [])}}
+			<a (click)="updateForm(LoginType.create)">{{formatMessage('createTitle', [])}}</a>
+		</div>
+		<div *dxTemplate="let data of 'login'" class="form-footer">
+			{{formatMessage('loginPrefix', [])}}
+			<a (click)="updateForm(LoginType.login)">{{formatMessage('loginTitle', [])}}</a>
+		</div>
+		<div *dxTemplate="let data of 'debugQuickSwitch'" class="form-footer">
+			<dx-button (onClick)="debugQuickSwitch($event)" text="kurtistrainor@gmail.com"></dx-button>
+			<dx-button (onClick)="debugQuickSwitch($event)" text="ktrainor@doc-it.com"></dx-button>
+			<dx-button (onClick)="debugQuickSwitch($event)" text="kurtis.trainor@prodigygame.com"></dx-button>
+		</div>
+	</dx-form>
+</form>
+

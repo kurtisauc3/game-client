@@ -1,0 +1,6 @@
+<dx-data-grid
+	(onInitialized)="dataGrid = $event.component"
+	(onContextMenuPreparing)="onContextMenuPreparing($event)"
+	[noDataText]="formatMessage('noTeams', [])"
+	[dataSource]="dataSource">
+</dx-data-grid>

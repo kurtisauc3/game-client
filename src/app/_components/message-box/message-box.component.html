@@ -1,0 +1,22 @@
+
+<dx-data-grid
+	(onInitialized)="dataGrid = $event.component"
+	(onContentReady)="onContentReady($event)"
+	[hoverStateEnabled]="false"
+	[height]="'calc(100% - 34px)'"
+	[noDataText]="formatMessage('noMessages', [])"
+	[dataSource]="dataSource">
+	<dxo-scrolling [useNative]="false"></dxo-scrolling>
+	<dxi-column dataField="message.content.text" cellTemplate="messageTemplate"></dxi-column>
+	<div *dxTemplate="let cell of 'messageTemplate'">
+		<div class="dx-tag-content messageTextContainer" [ngClass]="{'dx-theme-accent-as-background-color': cell.data.message.from.id === profileId}">{{cell.text}}</div>
+	</div>
+</dx-data-grid>
+<dx-text-box
+	(onInitialized)="textBox = $event.component"
+	(onEnterKey)="onEnterKey($event)"
+	[height]="34"
+	[width]="'100%'"
+	[placeholder]="formatMessage('typeHere', [])">
+</dx-text-box>
+

@@ -1,0 +1,32 @@
+<dx-popup
+	[visible]="visible$ | async"
+	(onInitialized)="popup = $event.component"
+	[position]="'left bottom'"
+	[closeOnOutsideClick]="false"
+	(onContentReady)="onContentReady($event)"
+	[shading]="false">
+	<dx-toolbar
+		(onInitialized)="toolbar = $event.component"
+		[items]="toolbarItems">
+	</dx-toolbar>
+	<div class="messageBoxContainer">
+		<dx-tab-panel
+			itemTitleTemplate="title"
+			itemTemplate="item"
+			[repaintChangesOnly]="true"
+			(onInitialized)="tabPanel = $event.component"
+			(onSelectionChanged)="onSelectionChanged($event)"
+			[noDataText]="formatMessage('noOpenMessages', [])"
+			[selectedIndex]="selectedIndex$ | async"
+			[repaintChangesOnly]="true"
+			[items]="tabPanelItems$ | async">
+			<div *dxTemplate="let data of 'title'" class="tabTitleContainer">
+				<span>{{data.title}}</span><i (click)="onCloseMessageClick(data.text)" class="dx-icon dx-icon-close"></i>
+				<span style="float:right"><app-unread-message-notification [profileId]="data.text"></app-unread-message-notification></span>
+			</div>
+			<div *dxTemplate="let data of 'item'">
+				<app-message-box [theirProfileId]="data.text"></app-message-box>
+			</div>
+		</dx-tab-panel>
+	</div>
+</dx-popup>

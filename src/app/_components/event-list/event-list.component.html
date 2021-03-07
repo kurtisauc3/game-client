@@ -1,0 +1,33 @@
+
+<dx-data-grid
+	(onInitialized)="dataGrid = $event.component"
+	(onContextMenuPreparing)="onContextMenuPreparing($event)"
+	[noDataText]="formatMessage('noEvents', [])"
+	[dataSource]="dataSource">
+	<dxi-column dataField="eventData.fromPlayerName"></dxi-column>
+	<dxi-column dataField="eventType" [groupIndex]="0"></dxi-column>
+	<dxi-column type="buttons">
+		<dxi-button
+			[hint]="formatMessage('info', [])"
+			[visible]="viewVisible"
+			icon="eye"
+			[onClick]="onViewClick">
+		</dxi-button>
+		<dxi-button
+			[hint]="formatMessage('accept', [])"
+			[visible]="acceptVisible"
+			icon="check"
+			[onClick]="onAcceptClick">
+		</dxi-button>
+		<dxi-button
+			[hint]="formatMessage('decline', [])"
+			[visible]="declineVisible"
+			icon="close"
+			[onClick]="onDeclineClick">
+		</dxi-button>
+	</dxi-column>
+	<dxo-summary>
+		<dxi-group-item column="eventType" summaryType="count" displayFormat="{0}"></dxi-group-item>
+	</dxo-summary>
+</dx-data-grid>
+
