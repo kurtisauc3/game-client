@@ -3,9 +3,10 @@ import { ProfileService, ApiService, DxService, ElectronService, LanguageService
 import { formatMessage } from 'devextreme/localization';
 import { Observable } from 'rxjs';
 import { filter, takeWhile } from 'rxjs/operators'
-import { BcAuthenticateResponse, BcMessagingResponse } from '@models';
+import { BcAuthenticateResponse, BcMessagingResponse, BC_REASON_CODE } from '@models';
 import dxTabPanel, { dxTabPanelItem } from 'devextreme/ui/tab_panel';
 import dxPopup from 'devextreme/ui/popup';
+import notify from 'devextreme/ui/notify'
 
 @Component({
 	selector: 'app-root',
@@ -87,35 +88,51 @@ export class AppComponent
 				this.message.clear();
 				this.lobby.clear();
 				// other clear methods here
+				this.logout();
 			}
 		});
 		this.api.getMessaging().subscribe(msg => this.message.tryLoadUnreadMessages([msg.message.from.id]));
 		this.api.getLobby().subscribe(result =>
 		{
+			// If there is a lobby object present in the message, update our lobby
+			// state with it.
 			if (result.data.lobby)
 			{
-				this.lobby.setLobby({ lobby: { ...result.data.lobby, lobbyId: result.data.lobbyId }, joiningState: result.data.lobby.state })
-			}
-			if (result.data.connectData)
-			{
-				this.lobby.setServer({ server: result.data })
+				console.log('update lobby', result)
 			}
 
 			if (result.operation === "DISBANDED")
 			{
-				if (result.data.reason.code === 80101)
+				if (result.data.reason.code === BC_REASON_CODE.ROOM_LAUNCHED)
 				{
-					console.log("start game?")
-					// Start the game!
-					//this.setState({ screen: "game" })
+					console.log('connect to server', result);
 				}
 				else
 				{
-					console.log("close game?")
-					//this.onGameScreenClose()
+					console.log('lobby disbanded', result);
 				}
 			}
+			else if (result.operation === "STARTING")
+			{
+				console.log("lobby starting", result)
+			}
+			else if (result.operation === "ROOM_READY")
+			{
+				console.log("room ready", result);
+			}
 		});
+	}
+
+	async logout()
+	{
+		try
+		{
+			await this.api.logout();
+		}
+		catch (error)
+		{
+			notify(formatMessage("logoutError", []), "error");
+		}
 	}
 
 }

@@ -41,7 +41,7 @@ export class SelectGameComponent
 			settings: {},
 			isReady: true,
 			extraJson: {},
-			teamCode: ""
+			teamCode: "all"
 		}
 		this.quickPlayButtonOptions = {
 			text: formatMessage('quickPlay', []),
@@ -66,6 +66,7 @@ export class SelectGameComponent
 		catch (error)
 		{
 			notify(formatMessage("createLobbyError", []), "error");
+			// may need to logout here...
 		}
 	}
 

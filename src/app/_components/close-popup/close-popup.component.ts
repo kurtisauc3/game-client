@@ -46,18 +46,7 @@ export class ClosePopupComponent
 
 	async tryLogout()
 	{
-		try
-		{
-			await this.api.logout();
-		}
-		catch (error)
-		{
-			notify(formatMessage("logoutError", []), "error");
-		}
-		finally
-		{
-			this.profile.setProfile(null);
-		}
+		this.profile.setProfile(null);
 	}
 
 	async onExitClick()
