@@ -1,12 +1,10 @@
 import { Component } from '@angular/core';
-import { BcAuthenticateResponse, CreateLobbyRequest, LobbyMode, LobbyType, TeamCode } from '@models';
+import { CreateLobbyRequest } from '@models';
 import { ApiService, ElectronService } from '@services';
 import { formatMessage } from 'devextreme/localization';
 import { dxButtonOptions } from 'devextreme/ui/button';
 import dxForm from 'devextreme/ui/form';
-import { Observable } from 'rxjs';
 import notify from 'devextreme/ui/notify'
-import { dxRadioGroupOptions } from 'devextreme/ui/radio_group';
 
 @Component({
   selector: 'app-select-game',
@@ -19,9 +17,7 @@ export class SelectGameComponent
 
 	selectForm: dxForm;
 	selectFormData: CreateLobbyRequest;
-	lobbyTypeEditorOptions: dxRadioGroupOptions;
-	lobbyModeEditorOptions: dxRadioGroupOptions;
-	selectButtonOptions: dxButtonOptions;
+	quickPlayButtonOptions: dxButtonOptions;
 
 	constructor(private api: ApiService, private electron: ElectronService)
 	{
@@ -31,34 +27,24 @@ export class SelectGameComponent
 
 	setupVariables()
 	{
-		this.lobbyTypeEditorOptions = {
-			items: [
-				LobbyType.singles,
-				LobbyType.doubles,
-				LobbyType.volleyball,
-				LobbyType.ironman,
-			]
-		};
-		this.lobbyModeEditorOptions = {
-			items: [
-				LobbyMode.unranked,
-				LobbyMode.ranked,
-				LobbyMode.custom
-			]
-		}
 		this.selectFormData = {
-			lobbyType: LobbyType.singles,
+			lobbyType: "singles",
 			rating: 0,
-			otherUserCxIds: [],
-			settings: {
-				lobbyMode: LobbyMode.unranked
+			maxSteps: 1,
+			algo: {
+				strategy: "ranged-absolute",
+				alignment: "center",
+				ranges: [1000]
 			},
+			filterJson: {},
+			otherUserCxIds: [],
+			settings: {},
 			isReady: true,
 			extraJson: {},
-			teamCode: TeamCode.team1
+			teamCode: ""
 		}
-		this.selectButtonOptions = {
-			text: formatMessage('createLobby', []),
+		this.quickPlayButtonOptions = {
+			text: formatMessage('quickPlay', []),
 			stylingMode: "contained",
 			type: "success",
 			useSubmitBehavior: true
@@ -75,7 +61,7 @@ export class SelectGameComponent
 	{
 		try
 		{
-			await this.api.createLobby(this.selectFormData);
+			await this.api.findOrCreateLobby(this.selectFormData);
 		}
 		catch (error)
 		{

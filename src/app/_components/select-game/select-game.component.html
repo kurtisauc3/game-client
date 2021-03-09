@@ -1,16 +1,10 @@
-<form (submit)="onFormSubmit($event)" class="flexContainer"> 
+<form (submit)="onFormSubmit($event)" class="flexContainer">
 	<dx-form
 		[colCount]="2"
 		[width]="420"
 		[height]="'auto'"
 		[(formData)]="selectFormData"
 		(onInitialized)="selectForm = $event.component">
-		<dxi-item dataField="lobbyType" editorType="dxRadioGroup" [editorOptions]="lobbyTypeEditorOptions">
-			<dxo-label [visible]="false"></dxo-label>
-		</dxi-item>
-		<dxi-item dataField="settings.lobbyMode" editorType="dxRadioGroup" [editorOptions]="lobbyModeEditorOptions">
-			<dxo-label [visible]="false"></dxo-label>
-		</dxi-item>
-		<dxi-item itemType="button" [colSpan]="2" horizontalAlignment="center" [buttonOptions]="selectButtonOptions"></dxi-item>
+		<dxi-item itemType="button" [colSpan]="2" horizontalAlignment="center" [buttonOptions]="quickPlayButtonOptions"></dxi-item>
 	</dx-form>
 </form>

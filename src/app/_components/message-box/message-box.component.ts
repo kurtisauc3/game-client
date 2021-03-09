@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, Input, OnDestroy } from '@angular/core';
 import { BcMessage, BcMessagingContext } from '@models';
-import { ApiService, ElectronService, MessageService } from '@services';
+import { ApiService, ElectronService, MessageService, ProfileService } from '@services';
 import CustomStore from 'devextreme/data/custom_store';
 import { formatMessage } from 'devextreme/localization';
 import dxDataGrid from 'devextreme/ui/data_grid';
@@ -28,7 +28,7 @@ export class MessageBoxComponent implements OnDestroy, AfterViewInit
 
 	@Input() theirProfileId: string;
 
-	constructor(private api: ApiService, private electron: ElectronService, private message: MessageService)
+	constructor(private profile: ProfileService, private api: ApiService, private electron: ElectronService, private message: MessageService)
 	{
 		this.setVariables();
 	}
@@ -89,7 +89,7 @@ export class MessageBoxComponent implements OnDestroy, AfterViewInit
 
 	async tryMarkMessagesRead(msgIds: string[])
 	{
-		try 
+		try
 		{
 			if (msgIds.length)
 			{
@@ -105,7 +105,7 @@ export class MessageBoxComponent implements OnDestroy, AfterViewInit
 
 	async trySendMessage(text: string)
 	{
-		try 
+		try
 		{
 			await this.api.sendMessageSimple([this.theirProfileId], text);
 			await this.dataGrid.refresh();
@@ -123,7 +123,7 @@ export class MessageBoxComponent implements OnDestroy, AfterViewInit
 
 	get profileId(): string
 	{
-		return this.api.profile.profileId;
+		return this.profile.profile.profileId;
 	}
 
 	get context(): BcMessagingContext

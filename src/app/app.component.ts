@@ -1,5 +1,5 @@
 import { AfterViewChecked, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { ApiService, DxService, ElectronService, LanguageService, LobbyService, MessageService } from '@services';
+import { ProfileService, ApiService, DxService, ElectronService, LanguageService, LobbyService, MessageService } from '@services';
 import { formatMessage } from 'devextreme/localization';
 import { Observable } from 'rxjs';
 import { filter, takeWhile } from 'rxjs/operators'
@@ -23,15 +23,16 @@ export class AppComponent
 	leftTabPanelItems: dxTabPanelItem[];
 	rightTabPanelItems: dxTabPanelItem[];
 
-	constructor(private lobby: LobbyService, private electron: ElectronService, private api: ApiService, private language: LanguageService, private dx: DxService, private message: MessageService)
+	constructor(private profile: ProfileService, private lobby: LobbyService, private electron: ElectronService, private api: ApiService, private language: LanguageService, private dx: DxService, private message: MessageService)
 	{
 		this.language.initialize();
 		this.electron.initialize();
+		this.profile.initialize();
 		this.api.initialize();
 		this.dx.initialize();
 		this.message.initialize();
 		this.lobby.initialize();
-		this.profile$ = this.api.getProfile();
+		this.profile$ = this.profile.getProfile();
 		this.setupVariables();
 		this.setupSubscriptions();
 	}
@@ -89,8 +90,32 @@ export class AppComponent
 			}
 		});
 		this.api.getMessaging().subscribe(msg => this.message.tryLoadUnreadMessages([msg.message.from.id]));
-		this.api.
-		//this.api.getLobby().subscribe(lobby => this.lobby.setLobby(lobby));
+		this.api.getLobby().subscribe(result =>
+		{
+			if (result.data.lobby)
+			{
+				this.lobby.setLobby({ lobby: { ...result.data.lobby, lobbyId: result.data.lobbyId }, joiningState: result.data.lobby.state })
+			}
+			if (result.data.connectData)
+			{
+				this.lobby.setServer({ server: result.data })
+			}
+
+			if (result.operation === "DISBANDED")
+			{
+				if (result.data.reason.code === 80101)
+				{
+					console.log("start game?")
+					// Start the game!
+					//this.setState({ screen: "game" })
+				}
+				else
+				{
+					console.log("close game?")
+					//this.onGameScreenClose()
+				}
+			}
+		});
 	}
 
 }

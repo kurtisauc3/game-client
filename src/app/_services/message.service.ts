@@ -5,6 +5,7 @@ import dxTabPanel, { dxTabPanelItem } from 'devextreme/ui/tab_panel';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { BcMessage } from '../_models/response';
 import { ApiService } from './api.service';
+import { ProfileService } from './profile.service';
 
 @Injectable({
 	providedIn: 'root'
@@ -17,7 +18,7 @@ export class MessageService
 	private _selectedIndex: BehaviorSubject<number>;
 	private _unreadMessages: BehaviorSubject<{[profileId: string]: number}>;
 
-	constructor(private api: ApiService)
+	constructor(private api: ApiService, private profile: ProfileService)
 	{
 	}
 
@@ -86,7 +87,7 @@ export class MessageService
 		if (!visible)
 		{
 			this.setSelectedIndex(-1);
-		} 
+		}
 	}
 
 	get selectedIndex(): number
@@ -116,7 +117,7 @@ export class MessageService
 
 	setTabPanelItems(tabPanelItems: dxTabPanelItem[])
 	{
-		this._tabPanelItems.next(tabPanelItems.filter(item => item.text !== this.api.profile.profileId));
+		this._tabPanelItems.next(tabPanelItems.filter(item => item.text !== this.profile.profile.profileId));
 	}
 
 	openMessage(profileId: string, profileName: string, unreadMessages: number)
@@ -147,7 +148,7 @@ export class MessageService
 		return {
 			searchCriteria: {
 				"message.from.id": profileId,
-				"message.to": this.api.profile.profileId,
+				"message.to": this.profile.profile.profileId,
 				"read": false,
 				"msgbox": "inbox"
 			},

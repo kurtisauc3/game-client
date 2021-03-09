@@ -89,6 +89,7 @@
 		"ranked": "Ranked",
 		"custom": "Custom",
 		"createLobby": "Create lobby",
-		"createLobbyError": "Error creating lobby"
+		"createLobbyError": "Error creating lobby",
+		"quickPlay": "Quick play"
 	}
 }

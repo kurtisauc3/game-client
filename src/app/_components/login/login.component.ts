@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { BcAuthenticateResponse, LoginRequest, LoginType } from '@models';
-import { ApiService, ElectronService, MessageService } from '@services';
+import { ApiService, ElectronService, MessageService, ProfileService } from '@services';
 import { formatMessage } from 'devextreme/localization';
 import dxForm, { dxFormButtonItem, dxFormEmptyItem, dxFormSimpleItem } from 'devextreme/ui/form';
 import dxPopup from 'devextreme/ui/popup';
@@ -21,7 +21,7 @@ export class LoginComponent implements AfterViewInit
 	form: dxForm;
 	type: LoginType;
 
-	constructor(private api: ApiService, private electron: ElectronService, private message: MessageService)
+	constructor(private profile: ProfileService, private api: ApiService, private electron: ElectronService, private message: MessageService)
 	{
 		this.setupVariables();
 	}
@@ -221,7 +221,7 @@ export class LoginComponent implements AfterViewInit
 		try
 		{
 			const profile = await this.api.authenticateEmailPassword(request.email, request.password, false);
-			this.api.setProfile(profile);
+			this.profile.setProfile(profile);
 		}
 		catch (error)
 		{

@@ -3,7 +3,7 @@
 	"version": 1,
 	"newProjectRoot": "projects",
 	"projects": {
-		"melee-client": {
+		"game-client": {
 			"root": "",
 			"sourceRoot": "src",
 			"projectType": "application",
@@ -86,24 +86,24 @@
 				"serve": {
 					"builder": "@angular-builders/custom-webpack:dev-server",
 					"options": {
-						"browserTarget": "melee-client:build"
+						"browserTarget": "game-client:build"
 					},
 					"configurations": {
 						"dev": {
-							"browserTarget": "melee-client:build:dev"
+							"browserTarget": "game-client:build:dev"
 						},
 						"web": {
-							"browserTarget": "melee-client:build:web"
+							"browserTarget": "game-client:build:web"
 						},
 						"production": {
-							"browserTarget": "melee-client:build:production"
+							"browserTarget": "game-client:build:production"
 						}
 					}
 				},
 				"extract-i18n": {
 					"builder": "@angular-devkit/build-angular:extract-i18n",
 					"options": {
-						"browserTarget": "melee-client:build"
+						"browserTarget": "game-client:build"
 					}
 				},
 				"test": {
@@ -137,7 +137,7 @@
 				}
 			}
 		},
-		"melee-client-e2e": {
+		"game-client-e2e": {
 			"root": "e2e",
 			"projectType": "application",
 			"architect": {
@@ -153,7 +153,7 @@
 			}
 		}
 	},
-	"defaultProject": "melee-client",
+	"defaultProject": "game-client",
 	"schematics": {
 		"@schematics/angular:component": {
 			"prefix": "app",

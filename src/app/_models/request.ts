@@ -1,4 +1,3 @@
-import { LobbyMode, LobbyType, LoginType, TeamCode } from './enum';
 export class LoginRequest
 {
 	userName?: string;
@@ -27,13 +26,20 @@ export class BcMessagingContext
 }
 export class CreateLobbyRequest
 {
-	lobbyType: LobbyType;
+	lobbyType: string;
 	rating: number;
 	otherUserCxIds: string[];
-	settings: {
-		lobbyMode: LobbyMode
-	};
+	settings: any;
 	isReady: boolean;
 	extraJson: any;
-	teamCode: TeamCode;
+	teamCode: string;
+	maxSteps: number;
+	algo: {
+		strategy: string;
+		alignment: string;
+		ranges: number[];
+	};
+	filterJson: {
+		cheater?: boolean;
+	}
 }

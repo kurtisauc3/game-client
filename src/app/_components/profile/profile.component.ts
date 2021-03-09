@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { BcAuthenticateResponse } from '@models';
-import { ApiService, ElectronService } from '@services';
+import { ApiService, ElectronService, ProfileService } from '@services';
 import { formatMessage } from 'devextreme/localization';
 import { dxButtonOptions } from 'devextreme/ui/button';
 import dxForm from 'devextreme/ui/form';
@@ -19,7 +19,7 @@ export class ProfileComponent
 	// form: dxForm;
 	// profile$: Observable<BcAuthenticateResponse>;
 
-	constructor(private api: ApiService, private electron: ElectronService)
+	constructor(private profile: ProfileService, private api: ApiService, private electron: ElectronService)
 	{
 		this.setupVariables();
 	}
@@ -27,7 +27,7 @@ export class ProfileComponent
 
 	setupVariables()
 	{
-		// this.profile$ = this.api.getProfile();
+		// this.profile$ = this.profile.getProfile();
 	}
 
 	// onFieldDataChanged(e)

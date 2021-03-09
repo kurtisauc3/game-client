@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { formatMessage } from 'devextreme/localization';
 import { BehaviorSubject } from 'rxjs';
-import { BcRttLobby } from '@models';
+import { BcLobby, BcServer } from '@models';
 import { ApiService } from './api.service';
 
 @Injectable({
@@ -10,7 +10,8 @@ import { ApiService } from './api.service';
 export class LobbyService
 {
 
-	private _lobby: BehaviorSubject<BcRttLobby>;
+	private _lobby: BehaviorSubject<BcLobby>;
+	private _server: BehaviorSubject<BcServer>;
 
 	constructor(private api: ApiService)
 	{
@@ -19,11 +20,13 @@ export class LobbyService
 	initialize()
 	{
 		this._lobby = new BehaviorSubject(null);
+		this._server = new BehaviorSubject(null);
 	}
 
 	clear()
 	{
 		this.setLobby(null);
+		this.setServer(null);
 	}
 
 	get lobby()
@@ -36,9 +39,24 @@ export class LobbyService
 		return this._lobby.asObservable();
 	}
 
-	setLobby(data: BcRttLobby)
+	setLobby(data: BcLobby)
 	{
 		this._lobby.next(data);
+	}
+
+	get server()
+	{
+		return this._server.value;
+	}
+
+	getServer()
+	{
+		return this._server.asObservable();
+	}
+
+	setServer(data: BcServer)
+	{
+		this._server.next(data);
 	}
 
 }

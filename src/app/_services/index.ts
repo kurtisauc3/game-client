@@ -1,3 +1,4 @@
+export * from './profile.service';
 export * from './lobby.service';
 export * from './electron.service';
 export * from './dx.service';

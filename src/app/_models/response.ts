@@ -100,9 +100,23 @@ export class BcLobby
 {
 	//todo
 }
-export class BcRttLobby
+export class BcServer
 {
 	//todo
+}
+export class BcRttLobby
+{
+	data: {
+		lobby: {
+			state: any
+		},
+		lobbyId: string,
+		connectData: any,
+		reason: {
+			code: BC_REASON_CODE
+		}
+	};
+	operation: string;
 }
 export class BcLobbyResponse
 {

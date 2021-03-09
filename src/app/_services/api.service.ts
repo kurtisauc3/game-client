@@ -35,7 +35,6 @@ export class ApiService
 {
 
 	private wrapper;
-	private _profile: BehaviorSubject<BcAuthenticateResponse>;
 
 	constructor(private electron: ElectronService)
 	{
@@ -43,25 +42,9 @@ export class ApiService
 
 	initialize()
 	{
-		this._profile = new BehaviorSubject(null);
 		const bc = require("braincloud");
 		this.wrapper = new bc.BrainCloudWrapper("_wrapper");
 		this.wrapper.initialize(appId, appSecret, appVersion);
-	}
-
-	get profile(): BcAuthenticateResponse
-	{
-		return this._profile.value;
-	}
-
-	getProfile(): Observable<BcAuthenticateResponse>
-	{
-		return this._profile.asObservable();
-	}
-
-	setProfile(profile: BcAuthenticateResponse)
-	{
-		this._profile.next(profile);
 	}
 
 	convertToObservable(func: Function, ...args): Observable<any>
@@ -309,19 +292,22 @@ export class ApiService
 	{
 		return this.convertToPromise(this.wrapper.asyncMatch.findCompleteMatches);
 	}
-	
-	createLobby(request: CreateLobbyRequest)
+
+	findOrCreateLobby(request: CreateLobbyRequest)
 	{
 		return this.convertToPromise(
-			this.wrapper.lobby.createLobby,
+			this.wrapper.lobby.findOrCreateLobby,
 			request.lobbyType,
 			request.rating,
+			request.maxSteps,
+			request.algo,
+			request.filterJson,
 			request.otherUserCxIds,
+			request.settings,
 			request.isReady,
 			request.extraJson,
-			request.teamCode,
-			request.settings
-			);
+			request.teamCode
+		);
 	}
 
 	/**

@@ -1,5 +1,5 @@
 {
-	"name": "melee-client",
+	"name": "game-client",
 	"version": "1.0.0",
 	"keywords": [],
 	"main": "main.js",

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiService, ElectronService, MessageService } from '@services';
+import { ApiService, ElectronService, MessageService, ProfileService } from '@services';
 import { formatMessage } from 'devextreme/localization';
 import dxPopup from 'devextreme/ui/popup';
 import notify from 'devextreme/ui/notify';
@@ -15,7 +15,7 @@ export class ClosePopupComponent
 
 	popup: dxPopup;
 
-	constructor(private api: ApiService, private electron: ElectronService, private message: MessageService)
+	constructor(private profile: ProfileService, private api: ApiService, private electron: ElectronService, private message: MessageService)
 	{
 		this.listenForClose();
 	}
@@ -26,7 +26,7 @@ export class ClosePopupComponent
 		{
 			this.electron.ipcRenderer.on('app-close', (event) =>
 			{
-				if (this.api.profile)
+				if (this.profile.profile)
 				{
 					this.popup.show();
 				}
@@ -56,7 +56,7 @@ export class ClosePopupComponent
 		}
 		finally
 		{
-			this.api.setProfile(null);
+			this.profile.setProfile(null);
 		}
 	}
 
