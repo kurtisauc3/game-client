@@ -80,7 +80,12 @@ export class AppComponent
 		{
 			if (profile)
 			{
-				this.api.enableRTT();
+				this.api.enableRTT().then(() =>
+				{
+					// register callbacks
+					this.api.getMessaging().subscribe(data => this.message.onEvent(data));
+					this.api.getLobby().subscribe(data => this.lobby.onEvent(data));
+				});
 			}
 			else
 			{
@@ -89,36 +94,6 @@ export class AppComponent
 				this.lobby.clear();
 				// other clear methods here
 				this.logout();
-			}
-		});
-		this.api.getMessaging().subscribe(msg => this.message.tryLoadUnreadMessages([msg.message.from.id]));
-		this.api.getLobby().subscribe(result =>
-		{
-			// If there is a lobby object present in the message, update our lobby
-			// state with it.
-			if (result.data.lobby)
-			{
-				console.log('update lobby', result)
-			}
-
-			if (result.operation === "DISBANDED")
-			{
-				if (result.data.reason.code === BC_REASON_CODE.ROOM_LAUNCHED)
-				{
-					console.log('connect to server', result);
-				}
-				else
-				{
-					console.log('lobby disbanded', result);
-				}
-			}
-			else if (result.operation === "STARTING")
-			{
-				console.log("lobby starting", result)
-			}
-			else if (result.operation === "ROOM_READY")
-			{
-				console.log("room ready", result);
 			}
 		});
 	}
@@ -131,7 +106,7 @@ export class AppComponent
 		}
 		catch (error)
 		{
-			notify(formatMessage("logoutError", []), "error");
+			//notify(formatMessage("logoutError", []), "error");
 		}
 	}
 

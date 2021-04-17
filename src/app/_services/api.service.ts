@@ -65,6 +65,24 @@ export class ApiService
 		})
 	}
 
+	convertRawToObservable(func: Function, ...args): Observable<any>
+	{
+		return new Observable(observer =>
+		{
+			try
+			{
+				func(...args, (...response) =>
+					observer.next(...response),
+					error => observer.error(error)
+				)
+			}
+			catch (error)
+			{
+				observer.error(error);
+			}
+		})
+	}
+
 	convertToPromise(func: Function, ...args): Promise<any>
 	{
 		return new Promise((resolve, reject) =>
@@ -327,6 +345,7 @@ export class ApiService
 	disableRTT(): void
 	{
 		this.wrapper.rttService.disableRTT();
+		this.deregisterAllRTTCallbacks();
 	}
 
 	getRTTEnabled(): boolean
@@ -346,7 +365,22 @@ export class ApiService
 
 	getLobby(): Observable<BcRttLobby>
 	{
-		return this.convertToObservable(this.wrapper.rttService.registerRTTLobbyCallback);
+		return this.convertRawToObservable(this.wrapper.rttService.registerRTTLobbyCallback);
+	}
+
+	connectRelay(config): Observable<BcEventResponse>
+	{
+		return this.convertToObservable(this.wrapper.relay.connect, config);
+	}
+
+	getRelay(): Observable<any>
+	{
+		return this.convertRawToObservable(this.wrapper.relay.registerRelayCallback);
+	}
+
+	getSystem(): Observable<any>
+	{
+		return this.convertRawToObservable(this.wrapper.relay.registerSystemCallback);
 	}
 
 	getMessaging(): Observable<BcRttMessage>
@@ -372,6 +406,21 @@ export class ApiService
 	deregisterAllRTTCallbacks()
 	{
 		this.wrapper.rttService.deregisterAllRTTCallbacks();
+	}
+
+	deregisterRelayCallback()
+	{
+		this.wrapper.relay.deregisterRelayCallback();
+	}
+
+	deregisterSystemCallback()
+	{
+		this.wrapper.relay.deregisterSystemCallback();
+	}
+
+	disconnectRelay()
+	{
+		this.wrapper.relay.disconnect();
 	}
 
 }

@@ -102,7 +102,14 @@ export class BcLobby
 }
 export class BcServer
 {
-	//todo
+	connectData: {
+		address: string;
+		ports: {
+			ws
+		}
+	};
+	passcode;
+	lobbyId;
 }
 export class BcRttLobby
 {

@@ -1,5 +1,17 @@
-<ng-container [ngSwitch]="lobby$ | async">
-	<ng-container *ngSwitchDefault>
+<ng-container [ngSwitch]="screen$ | async">
+	<ng-container *ngSwitchCase="GameScreen.selectLobby">
 		<app-select-game></app-select-game>
+	</ng-container>
+	<ng-container *ngSwitchCase="GameScreen.joiningLobby">
+		joiningLobby...
+	</ng-container>
+	<ng-container *ngSwitchCase="GameScreen.joining">
+		joining...
+	</ng-container>
+	<ng-container *ngSwitchCase="GameScreen.game">
+		game...
+	</ng-container>
+	<ng-container *ngSwitchCase="GameScreen.connecting">
+		connecting...
 	</ng-container>
 </ng-container>

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ApiService, ElectronService } from '@services';
+import { GameScreen } from '@models';
+import { ApiService, ElectronService, LobbyService } from '@services';
 import { formatMessage } from 'devextreme/localization';
 import { Observable } from 'rxjs';
 
@@ -13,9 +14,10 @@ export class PlayComponent
 {
 	formatMessage = formatMessage;
 
-	lobby$: Observable<any>
+	screen$: Observable<GameScreen>;
+	GameScreen = GameScreen;
 
-	constructor(private api: ApiService, private electron: ElectronService)
+	constructor(private api: ApiService, private lobby: LobbyService)
 	{
 		this.setupVariables();
 	}
@@ -23,7 +25,8 @@ export class PlayComponent
 
 	setupVariables()
 	{
-		this.lobby$ = this.api.getLobby();
+		this.screen$ = this.lobby.getScreen();
+		this.screen$.subscribe(console.log)
 	}
 
 }

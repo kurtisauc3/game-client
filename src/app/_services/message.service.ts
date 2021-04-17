@@ -38,6 +38,11 @@ export class MessageService
 		this._unreadMessages.next({});
 	}
 
+	onEvent(msg)
+	{
+		this.tryLoadUnreadMessages([msg.message.from.id])
+	}
+
 	get unreadMessages()
 	{
 		return this._unreadMessages.value;
